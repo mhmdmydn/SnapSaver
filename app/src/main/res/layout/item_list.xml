@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bg_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_260dp"
+        app:cardCornerRadius="@dimen/card_radius"
+        app:cardElevation="@dimen/card_elevation">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/download" />
+
+            <LinearLayout
+                android:layout_width="@dimen/size_50dp"
+                android:layout_height="@dimen/size_50dp"
+                android:layout_margin="@dimen/size_8dp"
+                android:background="@drawable/circle"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/img_item">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_photos"
+                    android:layout_margin="@dimen/size_8dp"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+        
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

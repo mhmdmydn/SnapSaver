@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_2dp">2dp</dimen>
+    <dimen name="size_4dp">4dp</dimen>
+    <dimen name="size_6dp">6dp</dimen>
+    <dimen name="size_8dp">8dp</dimen>
+    <dimen name="size_10dp">10dp</dimen>
+    <dimen name="size_12dp">12dp</dimen>
+    <dimen name="size_14dp">14dp</dimen>
+    <dimen name="size_16dp">16dp</dimen>
+    <dimen name="size_18dp">8dp</dimen>
+    <dimen name="size_20dp">20dp</dimen>
+
+    <dimen name="size_30dp">30dp</dimen>
+    <dimen name="size_35dp">35dp</dimen>
+    <dimen name="size_40dp">40dp</dimen>
+    <dimen name="size_45dp">45dp</dimen>
+    <dimen name="size_50dp">50dp</dimen>
+    <dimen name="size_55dp">55dp</dimen>
+
+    <dimen name="size_140dp">140dp</dimen>
+    <dimen name="size_160dp">160dp</dimen>
+    <dimen name="size_180dp">180dp</dimen>
+    <dimen name="size_200dp">200dp</dimen>
+    <dimen name="size_220dp">220dp</dimen>
+    <dimen name="size_240dp">240dp</dimen>
+    <dimen name="size_260dp">260dp</dimen>
+    <dimen name="size_280dp">280dp</dimen>
+    <dimen name="size_300dp">300dp</dimen>
+    <dimen name="size_320dp">320dp</dimen>
+    <dimen name="size_330dp">320dp</dimen>
+    <dimen name="size_340dp">340dp</dimen>
+    <dimen name="size_3600dp">360dp</dimen>
+
+    <dimen name="padding">8dp</dimen>
+    <dimen name="margin">8dp</dimen>
+
+    <dimen name="card_radius">10dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+
+
+</resources>

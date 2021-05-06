@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">SnapSaver</string>
+
+    <string name="photos">Photos</string>
+    <string name="videos">Videos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="navigation_drawer_open">Drawer Open</string>
+    <string name="navigation_drawer_close">Drawer Closed</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    
+    <!-- Nav Title-->
+    
+    <string name="nav_title_home">Home</string>
+    <string name="nav_title_account">Account</string>
+    <string name="nav_title_notification">Notification</string>
+    <string name="nav_title_setting">Setting</string>
+    <string name="nav_title_help">Help</string>
+</resources>
