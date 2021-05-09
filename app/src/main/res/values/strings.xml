@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SnapSaver</string>
 
+    <string name="version">V </string>
     <string name="photos">Photos</string>
     <string name="videos">Videos</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -11,12 +12,16 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    
+
     <!-- Nav Title-->
-    
-    <string name="nav_title_home">Home</string>
-    <string name="nav_title_account">Account</string>
-    <string name="nav_title_notification">Notification</string>
-    <string name="nav_title_setting">Setting</string>
-    <string name="nav_title_help">Help</string>
+
+    <string name="nav_title_photo">Photo</string>
+    <string name="nav_title_video">Video</string>
+    <string name="nav_title_directmsg">Direct Message</string>
+    <string name="nav_title_stikermaker">Stiker Maker</string>
+    <string name="nav_title_shareapp">Share App</string>
+    <string name="nav_title_rateapp">Rate App</string>
+    <string name="nav_title_moreapp">More App</string>
+    <string name="Let_me_recommend_you_this_application">Let me recommend you this application</string>
+    <string name="choose_one">Choose One</string>
 </resources>

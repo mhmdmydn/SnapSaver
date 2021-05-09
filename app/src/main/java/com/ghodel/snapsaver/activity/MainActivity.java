@@ -1,6 +1,9 @@
 package com.ghodel.snapsaver.activity;
 
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -99,6 +102,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
+        meowBottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+
+            }
+        });
+
         meowBottomNavigation.show(ID_PHOTOS, true);
     }
 
@@ -121,27 +131,57 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+        Fragment fragmentSelected = null;
         switch (item.getItemId()){
-            case R.id.nav_home:
+            case R.id.nav_photo:
+                fragmentSelected = new PhotoFragment();
+                meowBottomNavigation.show(ID_PHOTOS, true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentSelected).commit();
+                break;
+
+            case R.id.nav_video:
+                fragmentSelected = new VideosFragment();
+                meowBottomNavigation.show(ID_VIDEOS, true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentSelected).commit();
+                break;
+
+            case R.id.nav_directmsg:
+                break;
+
+            case R.id.nav_stiker_maker:
 
                 break;
 
-            case R.id.nav_account:
-
+            case R.id.nav_share_app:
+                MainUtil.shareApplication(getApplicationContext());
                 break;
 
-            case R.id.nav_notification:
-
+            case R.id.nav_rate_app:
+                Uri uri = Uri.parse("market://details?id=" + getApplication().getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" + getApplication().getPackageName())));
+                }
+                break;
+            case R.id.nav_more_app:
+                String devName = "Ghodel Dev";
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:"+devName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/search?q=pub:"+devName)));
+                }
                 break;
 
-            case R.id.nav_settings:
+            default:
 
-                break;
-
-            case R.id.nav_view:
-
-                break;
         }
 
         return true;

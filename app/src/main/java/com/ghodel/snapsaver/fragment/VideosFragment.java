@@ -1,14 +1,25 @@
 package com.ghodel.snapsaver.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ghodel.snapsaver.R;
+import com.ghodel.snapsaver.adapter.SnapSaverAdapter;
+import com.ghodel.snapsaver.helper.SnapSaverData;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +36,10 @@ public class VideosFragment extends BaseFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView rvVideo;
+    private SwipeRefreshLayout srl;
+    private SnapSaverAdapter adapter;
 
     public VideosFragment() {
         // Required empty public constructor
@@ -59,12 +74,31 @@ public class VideosFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-
+        rvVideo = view.findViewById(R.id.rv_video);
+        srl = view.findViewById(R.id.swipe_refresh);
     }
 
     @Override
     public void initLogic(View view) {
+        loadVideo();
 
+        srl.setColorSchemeColors(Color.BLUE, Color.RED, Color.BLUE);
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                rvVideo.setVisibility(View.GONE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rvVideo.setVisibility(View.VISIBLE);
+                        loadVideo();
+                        srl.setRefreshing(false);
+                    }
+                }, 2000);
+
+
+            }
+        });
     }
 
     @Override
@@ -72,10 +106,40 @@ public class VideosFragment extends BaseFragment {
 
     }
 
+    private void loadVideo(){
+        new SnapSaverData(getActivity(), srl, false, new SnapSaverData.SnapSaverTaskListener() {
+            @Override
+            public void onResult(ArrayList<File> list) {
+                rvVideo.setHasFixedSize(true);
+                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                rvVideo.setLayoutManager(staggeredGridLayoutManager);
+                adapter = new SnapSaverAdapter(list, getActivity());
+                rvVideo.setAdapter(adapter);
+                rvVideo.getAdapter().notifyDataSetChanged();
+                Log.d("Result", list.toString());
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("error", error);
+            }
+        }).execute();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_videos, container, false);
+        View view = inflater.inflate(R.layout.fragment_videos, container, false);
+        initView(view);
+        initLogic(view);
+        initListener(view);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadVideo();
     }
 }

@@ -1,15 +1,24 @@
 package com.ghodel.snapsaver.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.ghodel.snapsaver.R;
+import com.ghodel.snapsaver.adapter.SnapSaverAdapter;
+import com.ghodel.snapsaver.helper.SnapSaverData;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +37,8 @@ public class PhotoFragment extends BaseFragment {
     private String mParam2;
 
     private RecyclerView rvPhoto;
+    private SwipeRefreshLayout srl;
+    private SnapSaverAdapter adapter;
 
     public PhotoFragment() {
         // Required empty public constructor
@@ -63,11 +74,51 @@ public class PhotoFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         rvPhoto = view.findViewById(R.id.rv_photo);
+        srl = view.findViewById(R.id.swipe_refresh);
     }
 
     @Override
     public void initLogic(View view) {
+        loadPhoto();
+        srl.setColorSchemeColors(Color.BLUE, Color.RED, Color.BLUE);
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                rvPhoto.setVisibility(View.GONE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rvPhoto.setVisibility(View.VISIBLE);
+                        loadPhoto();
+                        srl.setRefreshing(false);
+                    }
+                }, 2000);
 
+
+            }
+        });
+
+    }
+
+    private void loadPhoto(){
+        new SnapSaverData(getActivity(), srl, true, new SnapSaverData.SnapSaverTaskListener() {
+            @Override
+            public void onResult(ArrayList<File> list) {
+                rvPhoto.setHasFixedSize(true);
+                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                rvPhoto.setLayoutManager(staggeredGridLayoutManager);
+                adapter = new SnapSaverAdapter(list, getActivity());
+                rvPhoto.setAdapter(adapter);
+                rvPhoto.getAdapter().notifyDataSetChanged();
+                Log.d("Result", list.toString());
+
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("error", error);
+            }
+        }).execute();
     }
 
     @Override
@@ -84,5 +135,11 @@ public class PhotoFragment extends BaseFragment {
         initLogic(view);
         initListener(view);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPhoto();
     }
 }

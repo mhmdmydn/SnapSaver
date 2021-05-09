@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ghodel.snapsaver">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -10,24 +13,49 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SnapSaver">
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+
         <activity
             android:name=".activity.Splashscreen"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.SnapSaver.SplashScreen">
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.MainActivity"
+            android:theme="@style/SplashScreen"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".utils.CrashHandler$CrashActivity"
             android:label="App Crash"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.VideoViewerActivity"
+            android:theme="@style/SplashScreen"/>
+
+        <activity android:name=".activity.PhotoViewerActivity"
+            android:theme="@style/SplashScreen"/>
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:authorities="${applicationId}.provider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

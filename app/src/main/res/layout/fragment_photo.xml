@@ -12,23 +12,10 @@
         android:layout_weight="1"
         android:id="@+id/swipe_refresh">
 
-        <RelativeLayout
-            android:id="@+id/rl_layout"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
-
-            <ProgressBar
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:id="@+id/progress_bar"
-                android:layout_centerInParent="true" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_photo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

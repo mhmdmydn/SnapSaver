@@ -6,10 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".fragment.VideosFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Video Fragment" />
+        android:layout_weight="1"
+        android:id="@+id/swipe_refresh">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>

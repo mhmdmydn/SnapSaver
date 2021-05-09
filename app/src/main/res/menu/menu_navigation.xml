@@ -4,28 +4,37 @@
         android:id="@+id/grp_1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home"
-            android:title="@string/nav_title_home" />
+            android:id="@+id/nav_photo"
+            android:icon="@drawable/ic_photos"
+            android:title="@string/nav_title_photo" />
         <item
-            android:id="@+id/nav_account"
-            android:icon="@drawable/ic_account_circle"
-            android:title="@string/nav_title_account" />
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_videos"
+            android:title="@string/nav_title_video" />
         <item
-            android:id="@+id/nav_notification"
-            android:icon="@drawable/ic_notifications"
-            android:title="@string/nav_title_notification" />
+            android:id="@+id/nav_directmsg"
+            android:icon="@drawable/ic_directmsg"
+            android:title="@string/nav_title_directmsg" />
+
+        <item
+            android:id="@+id/nav_stiker_maker"
+            android:icon="@drawable/ic_stiker_maker"
+            android:title="@string/nav_title_stikermaker" />
     </group>
     <group
         android:id="@+id/grp_2"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/nav_title_setting" />
+            android:id="@+id/nav_share_app"
+            android:icon="@drawable/ic_baseline_share_24"
+            android:title="@string/nav_title_shareapp" />
         <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_help"
-            android:title="@string/nav_title_help" />
+            android:id="@+id/nav_rate_app"
+            android:icon="@drawable/ic_rate_app"
+            android:title="@string/nav_title_rateapp" />
+        <item
+            android:id="@+id/nav_more_app"
+            android:icon="@drawable/ic_more_app"
+            android:title="@string/nav_title_moreapp" />
     </group>
 </menu>
