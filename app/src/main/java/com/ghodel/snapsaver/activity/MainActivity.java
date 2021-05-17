@@ -134,29 +134,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Fragment fragmentSelected = null;
         switch (item.getItemId()){
             case R.id.nav_photo:
+                drawer.closeDrawers();
                 fragmentSelected = new PhotoFragment();
                 meowBottomNavigation.show(ID_PHOTOS, true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentSelected).commit();
                 break;
 
             case R.id.nav_video:
+                drawer.closeDrawers();
                 fragmentSelected = new VideosFragment();
                 meowBottomNavigation.show(ID_VIDEOS, true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentSelected).commit();
                 break;
 
             case R.id.nav_directmsg:
+                drawer.closeDrawers();
+                Intent go = new Intent(Intent.ACTION_VIEW);
+                go.setClass(MainActivity.this, DirectMessageActivity.class);
+                startActivity(go);
                 break;
 
             case R.id.nav_stiker_maker:
-
+                startActivity(new Intent(Intent.ACTION_VIEW).setClass(this, StickerMakerActivity.class));
+                drawer.closeDrawers();
                 break;
 
             case R.id.nav_share_app:
                 MainUtil.shareApplication(getApplicationContext());
+                drawer.closeDrawers();
                 break;
 
             case R.id.nav_rate_app:
+                drawer.closeDrawers();
                 Uri uri = Uri.parse("market://details?id=" + getApplication().getPackageName());
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                 // To count with Play market backstack, After pressing back button,
@@ -172,6 +181,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             case R.id.nav_more_app:
+                drawer.closeDrawers();
                 String devName = "Ghodel Dev";
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pub:"+devName)));

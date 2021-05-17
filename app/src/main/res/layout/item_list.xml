@@ -20,7 +20,6 @@
             android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_260dp"
-            android:src="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
             android:id="@+id/img_item"/>
 

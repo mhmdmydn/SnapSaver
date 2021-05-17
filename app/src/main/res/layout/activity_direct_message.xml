@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DirectMessageActivity">
+
+    <EditText
+        android:id="@+id/edt_message"
+        android:layout_width="@dimen/size_300dp"
+        android:layout_height="@dimen/size_160dp"
+        android:layout_margin="@dimen/size_10dp"
+        android:padding="@dimen/size_10dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rounded_corner"
+        android:gravity="start"
+        android:hint="@string/message"
+        android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/edt_phone"
+            android:layout_width="@dimen/size_300dp"
+            android:layout_height="@dimen/size_45dp"
+            android:layout_margin="@dimen/size_10dp"
+            android:padding="@dimen/size_10dp"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_corner"
+            android:layout_below="@+id/edt_message"
+            android:hint="@string/phone"
+            android:inputType="phone" />
+
+            <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_45dp"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/edt_phone"
+                app:ccp_hideNameCode="false"
+                app:ccp_hidePhoneCode="false"
+                app:ccp_defaultNameCode="id"
+                app:ccp_keyboardAutoPopOnSearch="true"
+                app:ccp_showFullName="false" />
+
+                <Button
+                    android:id="@+id/btn_sending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ccp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/sending" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_contact"
+                        android:layout_below="@id/btn_sending"
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/size_300dp"
+                        android:layout_height="match_parent" />
+
+</RelativeLayout>

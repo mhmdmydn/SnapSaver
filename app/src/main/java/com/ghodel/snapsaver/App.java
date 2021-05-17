@@ -1,10 +1,8 @@
 package com.ghodel.snapsaver;
 
 import android.app.Application;
-import android.view.Window;
-import android.view.WindowManager;
-
 import com.ghodel.snapsaver.utils.CrashHandler;
+import com.orhanobut.hawk.Hawk;
 
 public class App extends Application {
 
@@ -23,5 +21,6 @@ public class App extends Application {
         super.onCreate();
         singleton = this;
         CrashHandler.init(singleton);
+        Hawk.init(singleton).build();
     }
 }

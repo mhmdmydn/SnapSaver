@@ -24,4 +24,19 @@
     <string name="nav_title_moreapp">More App</string>
     <string name="Let_me_recommend_you_this_application">Let me recommend you this application</string>
     <string name="choose_one">Choose One</string>
+    <string name="message">Type your message here</string>
+    <string name="phone">Phone Number</string>
+    <string name="sending">Sending</string>
+    <string name="to">To\\</string>
+    <string name="msg">Message</string>
+    <string name="title_activity_sticker_maker">Sticker Maker</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="no_stiker">No Sticker</string>
 </resources>

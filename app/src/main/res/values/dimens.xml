@@ -18,6 +18,8 @@
     <dimen name="size_50dp">50dp</dimen>
     <dimen name="size_55dp">55dp</dimen>
 
+    <dimen name="size_100dp">100dp</dimen>
+    <dimen name="size_120dp">120dp</dimen>
     <dimen name="size_140dp">140dp</dimen>
     <dimen name="size_160dp">160dp</dimen>
     <dimen name="size_180dp">180dp</dimen>
@@ -30,13 +32,14 @@
     <dimen name="size_320dp">320dp</dimen>
     <dimen name="size_330dp">320dp</dimen>
     <dimen name="size_340dp">340dp</dimen>
-    <dimen name="size_3600dp">360dp</dimen>
+    <dimen name="size_360dp">360dp</dimen>
 
     <dimen name="padding">8dp</dimen>
     <dimen name="margin">8dp</dimen>
 
     <dimen name="card_radius">10dp</dimen>
     <dimen name="card_elevation">3dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

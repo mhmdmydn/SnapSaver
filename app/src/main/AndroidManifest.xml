@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ghodel.snapsaver">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SnapSaver">
+        android:theme="@style/Theme.SnapSaver"
+
+        tools:replace="android:allowBackup,android:theme">
+        <activity
+            android:name=".activity.StickerMakerActivity"
+            android:label="@string/title_activity_sticker_maker"
+            tools:replace="android:theme"
+            android:theme="@style/Theme.SnapSaver.NoActionBar"></activity>
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
             android:name=".activity.Splashscreen"
@@ -29,28 +38,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/SplashScreen"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashScreen" />
         <activity
             android:name=".utils.CrashHandler$CrashActivity"
             android:label="App Crash"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.VideoViewerActivity"
+            android:theme="@style/SplashScreen" />
+        <activity
+            android:name=".activity.PhotoViewerActivity"
+            android:theme="@style/SplashScreen" />
+        <activity
+            android:name=".activity.DirectMessageActivity"
+            android:windowSoftInputMode="stateVisible" />
 
-        <activity android:name=".activity.VideoViewerActivity"
-            android:theme="@style/SplashScreen"/>
+        <service
+            android:name=".utils.VideoWallpaper"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
 
-        <activity android:name=".activity.PhotoViewerActivity"
-            android:theme="@style/SplashScreen"/>
-
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/videowallpaper" />
+        </service>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:exported="false"
             android:authorities="${applicationId}.provider"
+            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"

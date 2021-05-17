@@ -20,6 +20,7 @@ import com.ghodel.snapsaver.R;
 import com.ghodel.snapsaver.adapter.VideoAdapter;
 import com.ghodel.snapsaver.utils.Constants;
 import com.ghodel.snapsaver.utils.MainUtil;
+import com.ghodel.snapsaver.utils.VideoWallpaper;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -38,7 +39,7 @@ public class VideoViewerActivity extends BaseActivity {
     private int position;
     private String video;
     private ArrayList<HashMap<String, Object>> list = new ArrayList<>();
-    private FloatingActionButton fabDelete, fabSave, fabRepost;
+    private FloatingActionButton fabDelete, fabSave, fabRepost, fabLiveWallpaper;
     private File f;
     private VideoAdapter videoAdapter;
     private ViewPager viewPager;
@@ -60,6 +61,7 @@ public class VideoViewerActivity extends BaseActivity {
         fabDelete = findViewById(R.id.fab_delete);
         fabRepost = findViewById(R.id.fab_repost);
         fabSave = findViewById(R.id.fab_save);
+        fabLiveWallpaper = findViewById(R.id.fab_set_livewallpaper);
     }
 
     @Override
@@ -82,7 +84,7 @@ public class VideoViewerActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                videoAdapter.initializePlayer(position);
+
             }
 
             @Override
@@ -160,6 +162,19 @@ public class VideoViewerActivity extends BaseActivity {
                 }
             }
         });
+
+        fabLiveWallpaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    File save = MainUtil.exportFile(new File(list.get(position).get("path").toString()), new File(Constants.SnapSaverPath));
+                    VideoWallpaper.setToWallPaper(getApplicationContext(), save.getAbsolutePath());
+                    VideoWallpaper.setVoiceSilence(getApplicationContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 
@@ -178,19 +193,19 @@ public class VideoViewerActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        videoAdapter.resume();
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        videoAdapter.pause();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        videoAdapter.stop();
+
     }
 
 }
