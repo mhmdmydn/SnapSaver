@@ -7,7 +7,7 @@ import java.io.File;
 public class Constants {
 
     public static final String FolderWhatsApp = "/WhatsApp/Media/.Statuses";
-    public static final String SnapSaverPath = Environment.getExternalStorageDirectory() + File.separator + "SNAPSAVER" + File.separator;
+    public static final String SnapSaverPath = Environment.getExternalStorageDirectory() + File.separator + "SnapSaver" + File.separator +"Status" + File.separator;
 
     public static final String VIDEO_PARAMS_CONTROL_ACTION = "com.ghodel.snapsaver.utils";
     public static final String ACTION = "action";

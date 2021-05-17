@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +34,6 @@ public class StickerDetailsActivity extends AppCompatActivity {
     private static final String TAG = StickerDetailsActivity.class.getSimpleName();
     StickerPack stickerPack;
     StickerDetailsAdapter adapter;
-    Toolbar toolbar;
     RecyclerView recyclerView;
     List<Sticker> stickers;
     ArrayList<String> strings;
@@ -47,16 +45,14 @@ public class StickerDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_details);
         stickerPack = getIntent().getParcelableExtra(StickerMakerActivity.EXTRA_STICKERPACK);
-        toolbar = findViewById(R.id.toolbar);
         addtowhatsapp = findViewById(R.id.add_to_whatsapp);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(stickerPack.name);
         getSupportActionBar().setSubtitle(stickerPack.publisher);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = findViewById(R.id.recyclerView);
         stickers = stickerPack.getStickers();
         strings = new ArrayList<>();
-        path = Environment.getExternalStorageDirectory() + "/" + "stickers_asset" + "/" + stickerPack.identifier + "/";
+        path = Environment.getExternalStorageDirectory() + "/" + "snapsaver/sticker" + "/" + stickerPack.identifier + "/";
         File file = new File(path + stickers.get(0).imageFileName);
         if(!file.exists()) {
             file.mkdir();
@@ -78,7 +74,6 @@ public class StickerDetailsActivity extends AppCompatActivity {
         addtowhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(StickerDetailsActivity.this, path, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.setAction("com.whatsapp.intent.action.ENABLE_STICKER_PACK");
                 intent.putExtra(EXTRA_STICKER_PACK_ID, stickerPack.identifier);

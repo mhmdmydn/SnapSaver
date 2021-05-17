@@ -65,54 +65,6 @@ public class MainUtil {
         toast.show();
     }
 
-    public static ArrayList<SnapSaverModel> getPhoto(File dir) {
-        ArrayList<SnapSaverModel> fileList = new ArrayList<>();
-        SnapSaverModel ssModel = new SnapSaverModel();
-        File listFile[] = dir.listFiles();
-        if (listFile != null && listFile.length > 0) {
-            for (int i = 0; i < listFile.length; i++) {
-
-                if (listFile[i].isDirectory()) {
-                    getPhoto(listFile[i]);
-
-                } else {
-
-                    if (listFile[i].getName().endsWith(".png") || listFile[i].getName().endsWith(".jpg") || listFile[i].getName().endsWith(".jpeg")  || listFile[i].getName().endsWith(".gif"))  {
-                        ssModel.setTitle(listFile[i].getName());
-                        ssModel.setPath(listFile[i].getAbsolutePath());
-                        fileList.add(ssModel);
-                    }
-                }
-
-            }
-        }
-        return fileList;
-    }
-
-    public static ArrayList<SnapSaverModel> getVideo(File dir) {
-        ArrayList<SnapSaverModel> fileList = new ArrayList<>();
-        SnapSaverModel ssModel = new SnapSaverModel();
-        File listFile[] = dir.listFiles();
-        if (listFile != null && listFile.length > 0) {
-            for (int i = 0; i < listFile.length; i++) {
-
-                if (listFile[i].isDirectory()) {
-                    getPhoto(listFile[i]);
-
-                } else {
-
-                    if (listFile[i].getName().endsWith(".mp4") || listFile[i].getName().endsWith(".mkv") || listFile[i].getName().endsWith(".avi")  || listFile[i].getName().endsWith(".mpeg") || listFile[i].getName().endsWith(".wmp") || listFile[i].getName().endsWith(".3gp"))  {
-                        ssModel.setTitle(listFile[i].getName());
-                        ssModel.setPath(listFile[i].getAbsolutePath());
-                        fileList.add(ssModel);
-                    }
-                }
-
-            }
-        }
-        return fileList;
-    }
-
     public static ArrayList<File> getListImage(File parentDir) {
         ArrayList<File> inFiles = new ArrayList<File>();
         File[] files;
@@ -144,23 +96,6 @@ public class MainUtil {
             }
         }
         return inFiles;
-    }
-
-    public static void saveFile(Context context, String sFileName, String sBody) {
-        try {
-            File root = new File(Environment.getExternalStorageDirectory(), "SnapSaver/Debug");
-            if (!root.exists()) {
-                root.mkdirs();
-            }
-            File file = new File(root, sFileName);
-            FileWriter writer = new FileWriter(file);
-            writer.append(sBody);
-            writer.flush();
-            writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static File exportFile(File src, File dst) throws IOException {

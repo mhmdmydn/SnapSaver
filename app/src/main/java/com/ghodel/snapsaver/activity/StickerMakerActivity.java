@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ghodel.snapsaver.R;
@@ -57,6 +58,7 @@ public class StickerMakerActivity extends BaseActivity implements GetStickers.Ca
     private RecyclerView recyclerView;
     private List<String> mEmojis,mDownloadFiles;
     private String android_play_store_link;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +76,24 @@ public class StickerMakerActivity extends BaseActivity implements GetStickers.Ca
     @Override
     public void initView() {
         recyclerView = findViewById(R.id.recyclerView);
+        progressBar = findViewById(R.id.progress_bar);
     }
 
     @Override
     public void initLogic() {
         stickerPacks = new ArrayList<>();
 
-        path = Environment.getExternalStorageDirectory() + "/" + "stickers_asset";
+        path = Environment.getExternalStorageDirectory() + "/" + "snapsaver/sticker";
         mStickers = new ArrayList<>();
         stickerModels = new ArrayList<>();
         mEmojis = new ArrayList<>();
         mDownloadFiles = new ArrayList<>();
         mEmojis.add("");
         adapter = new StickerAdapter(this, stickerPacks);
-        setContentView(R.layout.activity_main);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         new GetStickers(this, this, getResources().getString(R.string.json_link)).execute();
     }
 
@@ -109,6 +111,8 @@ public class StickerMakerActivity extends BaseActivity implements GetStickers.Ca
 
     @Override
     public void onListLoaded(String jsonResult, boolean jsonSwitch) {
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
         try {
             if (jsonResult != null) {
                 try {

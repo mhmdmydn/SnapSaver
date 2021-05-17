@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 
 import android.text.TextUtils;
@@ -175,9 +176,9 @@ public class StickerContentProvider extends ContentProvider {
         try {
             File file;
             if(fileName.endsWith(".png")){
-                file = new File(getContext().getFilesDir()+  "/" + "stickers_asset" + "/" + identifier + "/try/", fileName);
+                file = new File(Environment.getExternalStorageDirectory() +  "/" + "snapsaver/sticker" + "/" + identifier + "/try/", fileName);
             } else {
-                file = new File(getContext().getFilesDir()+  "/" + "stickers_asset" + "/" + identifier + "/", fileName);
+                file = new File(Environment.getExternalStorageDirectory() +  "/" + "snapsaver/sticker" + "/" + identifier + "/", fileName);
             }
             if (!file.exists()) {
                 Log.d("fetFile", "StickerPack dir not found");

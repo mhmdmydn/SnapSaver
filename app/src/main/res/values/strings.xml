@@ -40,4 +40,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="no_stiker">No Sticker</string>
     <string name="json_link">https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/contents.json</string>
+    <string name="add_to_whatsapp">Add To WhatsApp</string>
 </resources>

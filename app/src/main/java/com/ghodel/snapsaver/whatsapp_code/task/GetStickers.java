@@ -16,9 +16,9 @@ import java.net.URL;
 public class GetStickers extends AsyncTask<Void, Void, Void> {
 
     private String url, jsonResult;
-    FileOutputStream outputStream;
-    Context contexxt;
-    boolean newstickerpacks = false;
+    private FileOutputStream outputStream;
+    private Context contexxt;
+    private boolean newstickerpacks = false;
     private Callbacks callbacks;
 
     public GetStickers(Context context, Callbacks callbacks, String url) {
