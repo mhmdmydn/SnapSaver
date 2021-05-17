@@ -48,6 +48,30 @@
           "emojis": ["ðŸ™‚"]
         }
       ]
+    },
+    {
+      "identifier": "3",
+      "name": "Kown Yuli",
+      "publisher": "Muhammad Mayudin",
+      "tray_image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/logo/icon.png",
+      "publisher_email":"muhammadmayudin12@gmail.com",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/KownYuli_1.jpg",
+          "emojis": ["ðŸ™‚"]
+        },
+        {
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/KownYuli_1.jpg",
+          "emojis": ["ðŸ™‚"]
+        },
+        {
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/KownYuli_1.jpg",
+          "emojis": ["ðŸ™‚"]
+        }
+      ]
     }
   ]
 }
