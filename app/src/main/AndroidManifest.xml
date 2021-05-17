@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".App"
@@ -55,6 +57,12 @@
         <activity
             android:name=".activity.DirectMessageActivity"
             android:windowSoftInputMode="stateVisible" />
+
+        <activity android:name=".whatsapp_code.activity.StickerDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.StickerMakerActivity" />
+        </activity>
 
         <service
             android:name=".utils.VideoWallpaper"

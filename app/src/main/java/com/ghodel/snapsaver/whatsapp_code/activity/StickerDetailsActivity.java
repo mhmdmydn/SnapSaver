@@ -4,35 +4,36 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.viztushar.stickers.BuildConfig;
-import com.viztushar.stickers.MainActivity;
-import com.viztushar.stickers.R;
-import com.viztushar.stickers.Sticker;
-import com.viztushar.stickers.StickerPack;
-import com.viztushar.stickers.adapter.StickerDetailsAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.ghodel.snapsaver.BuildConfig;
+import com.ghodel.snapsaver.R;
+import com.ghodel.snapsaver.activity.StickerMakerActivity;
+import com.ghodel.snapsaver.whatsapp_code.Sticker;
+import com.ghodel.snapsaver.whatsapp_code.StickerPack;
+import com.ghodel.snapsaver.whatsapp_code.adapter.StickerDetailsAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.viztushar.stickers.MainActivity.EXTRA_STICKER_PACK_AUTHORITY;
-import static com.viztushar.stickers.MainActivity.EXTRA_STICKER_PACK_ID;
-import static com.viztushar.stickers.MainActivity.EXTRA_STICKER_PACK_NAME;
+import static com.ghodel.snapsaver.activity.StickerMakerActivity.EXTRA_STICKER_PACK_AUTHORITY;
+import static com.ghodel.snapsaver.activity.StickerMakerActivity.EXTRA_STICKER_PACK_ID;
+import static com.ghodel.snapsaver.activity.StickerMakerActivity.EXTRA_STICKER_PACK_NAME;
 
 public class StickerDetailsActivity extends AppCompatActivity {
 
     private static final int ADD_PACK = 200;
     private static final String TAG = StickerDetailsActivity.class.getSimpleName();
-    com.viztushar.stickers.StickerPack stickerPack;
+    StickerPack stickerPack;
     StickerDetailsAdapter adapter;
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -45,7 +46,7 @@ public class StickerDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticker_details);
-        stickerPack = getIntent().getParcelableExtra(MainActivity.EXTRA_STICKERPACK);
+        stickerPack = getIntent().getParcelableExtra(StickerMakerActivity.EXTRA_STICKERPACK);
         toolbar = findViewById(R.id.toolbar);
         addtowhatsapp = findViewById(R.id.add_to_whatsapp);
         setSupportActionBar(toolbar);
@@ -61,7 +62,7 @@ public class StickerDetailsActivity extends AppCompatActivity {
             file.mkdir();
         }
         Log.d(TAG, "onCreate: " +path + stickers.get(0).imageFileName);
-        for (com.viztushar.stickers.Sticker s : stickers) {
+        for (com.ghodel.snapsaver.whatsapp_code.Sticker s : stickers) {
             if (!file.exists()) {
                 strings.add(s.imageFileName);
             } else {

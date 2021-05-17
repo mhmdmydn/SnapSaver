@@ -5,22 +5,22 @@
       "identifier": "1",
       "name": "Taffy Cat",
       "publisher": "Muhammad Mayudin",
-      "tray_image_file": "https://googlechrome.github.io/samples/picture-element/images/kitten-small.png",
+      "tray_image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/logo/icon.png",
       "publisher_email":"muhammadmayudin12@gmail.com",
       "publisher_website": "",
       "privacy_policy_website": "",
       "license_agreement_website": "",
       "stickers": [
         {
-          "image_file": "https://raw.githubusercontent.com/viztushar/Urban/master/thub5/DopeWalls_v162_01_thub.png",
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/DopeWalls_v162_01_thub.png",
           "emojis": ["ðŸ™‚"]
         },
         {
-          "image_file": "https://raw.githubusercontent.com/viztushar/Urban/master/thub5/DopeWalls_v162_02_thub.png",
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/DopeWalls_v162_02_thub.png",
           "emojis": ["ðŸ™‚"]
         },
         {
-          "image_file": "https://raw.githubusercontent.com/viztushar/Urban/master/thub5/DopeWalls_v162_03_thub.png",
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/DopeWalls_v162_03_thub.png",
           "emojis": ["ðŸ™‚"]
         }
       ]
@@ -29,22 +29,22 @@
       "identifier": "2",
       "name": "Taffy Cat 2",
       "publisher": "Muhammad Mayudin",
-      "tray_image_file": "https://googlechrome.github.io/samples/picture-element/images/kitten-small.png",
+      "tray_image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/logo/icon.png",
       "publisher_email":"muhammadmayudin12@gmail.com",
       "publisher_website": "",
       "privacy_policy_website": "",
       "license_agreement_website": "",
       "stickers": [
         {
-          "image_file": "https://raw.githubusercontent.com/viztushar/Urban/master/thub5/DopeWalls_v162_04_thub.png",
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/DopeWalls_v162_04_thub.png",
           "emojis": ["ðŸ™‚"]
         },
         {
-          "image_file": "https://raw.githubusercontent.com/viztushar/Urban/master/thub5/DopeWalls_v162_05_thub.png",
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/DopeWalls_v162_05_thub.png",
           "emojis": ["ðŸ™‚"]
         },
         {
-          "image_file": "https://raw.githubusercontent.com/viztushar/Urban/master/thub5/DopeWalls_v162_06_thub.png",
+          "image_file": "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/DopeWalls_v162_06_thub.png",
           "emojis": ["ðŸ™‚"]
         }
       ]

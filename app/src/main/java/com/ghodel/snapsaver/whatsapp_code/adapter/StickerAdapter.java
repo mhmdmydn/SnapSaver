@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,12 +29,15 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.ghodel.snapsaver.R;
+import com.ghodel.snapsaver.activity.StickerMakerActivity;
 import com.ghodel.snapsaver.whatsapp_code.Sticker;
 import com.ghodel.snapsaver.whatsapp_code.activity.StickerDetailsActivity;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ghodel.snapsaver.activity.StickerMakerActivity.EXTRA_STICKERPACK;
 
 public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHolder> {
 
@@ -55,7 +60,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         final List<Sticker> models = StickerPack.get(i).getStickers();
         viewHolder.name.setText(StickerPack.get(i).name);
-        final String url = "https://raw.githubusercontent.com/viztushar/Urban/master/thub5/";
+        final String url = "https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/image_file/";
         Glide.with(context)
                 .load(url + models.get(0).imageFileName.replace(".webp",".png"))
                 .into(viewHolder.imone);
@@ -78,7 +83,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
 
         Glide.with(context)
                 .asBitmap()
-                .load("https://googlechrome.github.io/samples/picture-element/images/" + StickerPack.get(i).trayImageFile.replace("_"," "))
+                .load("https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/logo/" + StickerPack.get(i).trayImageFile.replace("_"," "))
                 .addListener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
@@ -96,7 +101,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
                                 canvas.getHeight() / 2 - resource.getHeight() / 2
                         );
                         canvas.drawBitmap(resource, matrix, null);
-                        MainActivity.SaveTryImage(bitmap1,StickerPack.get(i).trayImageFile,StickerPack.get(i).identifier);
+                        StickerMakerActivity.SaveTryImage(bitmap1,StickerPack.get(i).trayImageFile,StickerPack.get(i).identifier);
                         return false;
                     }
                 })
@@ -111,7 +116,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
             }
         });
 
-        File file = new File(MainActivity.path + "/" + StickerPack.get(i).identifier + "/" + models.get(0).imageFileName);
+        File file = new File(StickerMakerActivity.path + "/" + StickerPack.get(i).identifier + "/" + models.get(0).imageFileName);
         if (!file.exists()) {
             viewHolder.rl.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,7 +151,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
                                                                 canvas.getHeight() / 2 - resource.getHeight() / 2
                                                         );
                                                         canvas.drawBitmap(resource, matrix, null);
-                                                        MainActivity.SaveImage(bitmap1, s.imageFileName, StickerPack.get(viewHolder.getAdapterPosition()).identifier);
+                                                        StickerMakerActivity.SaveImage(bitmap1, s.imageFileName, StickerPack.get(viewHolder.getAdapterPosition()).identifier);
                                                         return true;
                                                     }
                                                 }).submit();
