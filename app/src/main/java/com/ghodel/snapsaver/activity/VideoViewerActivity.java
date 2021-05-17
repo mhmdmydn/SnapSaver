@@ -1,30 +1,27 @@
 package com.ghodel.snapsaver.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.ghodel.snapsaver.BuildConfig;
 import com.ghodel.snapsaver.R;
-import com.ghodel.snapsaver.adapter.VideoAdapter;
 import com.ghodel.snapsaver.utils.Constants;
 import com.ghodel.snapsaver.utils.MainUtil;
 import com.ghodel.snapsaver.utils.VideoWallpaper;
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,11 +35,11 @@ public class VideoViewerActivity extends BaseActivity {
 
     private int position;
     private String video;
-    private ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+    private ArrayList<HashMap<String, Object>> list;
     private FloatingActionButton fabDelete, fabSave, fabRepost, fabLiveWallpaper;
     private File f;
-    private VideoAdapter videoAdapter;
-    private ViewPager viewPager;
+    private VideoView videoView;
+    private Uri nextUri, previousUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +54,7 @@ public class VideoViewerActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        viewPager = findViewById(R.id.vp_photo);
+        videoView = findViewById(R.id.videoView);
         fabDelete = findViewById(R.id.fab_delete);
         fabRepost = findViewById(R.id.fab_repost);
         fabSave = findViewById(R.id.fab_save);
@@ -69,31 +66,70 @@ public class VideoViewerActivity extends BaseActivity {
         position = Integer.parseInt(getIntent().getStringExtra("position"));
         video = getIntent().getStringExtra("img_data");
 
+        list = new ArrayList<>();
         list = new Gson().fromJson(video, new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType());
 
         f = new File(list.get(position).get("path").toString());
-        videoAdapter = new VideoAdapter(VideoViewerActivity.this, list);
-        viewPager.setAdapter(videoAdapter);
-        viewPager.setCurrentItem(position);
+        //specify the location of media file
+        Uri uri=Uri.parse(f.getAbsolutePath());
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        try {
+            //Creating MediaController
+            MediaController mediaController = new MediaController(this);
+            mediaController.setAnchorView(videoView);
+            mediaController.setPrevNextListeners(onClickListenerNext, onClickListenerPrevious);
+
+            //Setting MediaController and URI, then starting the videoView
+            videoView.setMediaController(mediaController);
+            videoView.setVideoURI(uri);
+            videoView.requestFocus();
+            videoView.start();
+        } catch (Exception e){
+            Toast.makeText(VideoViewerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                videoAdapter.releasePlayer();
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                videoAdapter.releasePlayer();
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                if(!(position < list.size())){
+                    return;
+                }
+                Uri nextUri =
+                        Uri.parse(list.get(position++).get("path").toString());
+                videoView.setVideoURI(nextUri);
+                videoView.start();
             }
         });
 
+
+
+
     }
+
+    private View.OnClickListener onClickListenerNext = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(!(position < list.size())){
+                return;
+            }
+
+            nextUri = Uri.parse(list.get(position++).get("path").toString());
+            videoView.setVideoURI(nextUri);
+            videoView.start();
+        }
+    };
+    private View.OnClickListener onClickListenerPrevious = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(!(position < list.size())){
+                return;
+            }
+
+            previousUri = Uri.parse(list.get(position--).get("path").toString());
+            videoView.setVideoURI(previousUri);
+            videoView.start();
+        }
+    };
 
     @Override
     public void initListener() {

@@ -17,8 +17,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.SnapSaver"
-
         tools:replace="android:allowBackup,android:theme">
+
         <activity
             android:name=".activity.StickerMakerActivity"
             android:label="@string/title_activity_sticker_maker"
