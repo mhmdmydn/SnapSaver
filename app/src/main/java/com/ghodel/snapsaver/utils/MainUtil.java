@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -16,13 +15,11 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.ghodel.snapsaver.model.SnapSaverModel;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -100,6 +97,8 @@ public class MainUtil {
 
     public static File exportFile(File src, File dst) throws IOException {
 
+        String extension = src.toString().substring(src.toString().lastIndexOf("."));
+
         //if folder does not exist
         if (!dst.exists()) {
             if (!dst.mkdir()) {
@@ -107,8 +106,8 @@ public class MainUtil {
             }
         }
 
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File expFile = new File(dst.getPath() + File.separator + "SnapSaver_IMG_" + timeStamp + ".jpg");
+        String timeStamp = new SimpleDateFormat("ddMMyyyyhmm").format(new Date());
+        File expFile = new File(dst.getPath() + File.separator + "SnapSaver_" + timeStamp +extension);
         FileChannel inChannel = null;
         FileChannel outChannel = null;
 

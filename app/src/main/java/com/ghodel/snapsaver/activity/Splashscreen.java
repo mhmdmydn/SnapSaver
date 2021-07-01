@@ -18,8 +18,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ghodel.snapsaver.R;
+import com.ghodel.snapsaver.utils.Constants;
+
+import java.io.File;
+
+import in.codeshuffle.typewriterview.TypeWriterView;
 
 public class Splashscreen extends BaseActivity {
 
@@ -52,12 +58,31 @@ public class Splashscreen extends BaseActivity {
 
     @Override
     public void initLogic() {
+
+
         tvVersion.setText(getString(R.string.version) + " " +showVersionApp());
+        //Create Object and refer to layout view
+        TypeWriterView typeWriterView=(TypeWriterView)findViewById(R.id.typeWriterView);
+
+        //Setting each character animation delay
+        typeWriterView.setDelay(3);
+
+        //Setting music effect On/Off
+        typeWriterView.setWithMusic(false);
+
+        //Animating Text
+        typeWriterView.animateText("Snapsaver");
+
+
 
 //      Loading pindah activity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //Remove Animation. This is required to be called when you want to minimize the app while animation is going on. Call this in onPause() or onStop()
+
+                typeWriterView.removeAnimation();
+
                 Intent in = new Intent();
                 in.setAction(Intent.ACTION_VIEW);
                 in.setClass(Splashscreen.this, MainActivity.class);
@@ -120,6 +145,12 @@ public class Splashscreen extends BaseActivity {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 Log.d("Permission", "Permission has been Granted");
                 initLogic();
+                File dir = new File(Constants.SnapSaverPath);
+                if (!dir.exists()){
+                    dir.mkdirs();
+                    Toast.makeText(this, "Success"+ dir, Toast.LENGTH_SHORT).show();
+                    Log.d("Path Created", "Success");
+                }
             } else {
                 Log.d("Permission", "Permission has been denied or request cancelled");
                 finishAffinity();

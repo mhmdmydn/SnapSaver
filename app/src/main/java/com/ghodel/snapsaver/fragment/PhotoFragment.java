@@ -1,8 +1,10 @@
 package com.ghodel.snapsaver.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.ghodel.snapsaver.R;
 import com.ghodel.snapsaver.adapter.SnapSaverAdapter;
 import com.ghodel.snapsaver.helper.SnapSaverData;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,6 +84,12 @@ public class PhotoFragment extends BaseFragment {
     @Override
     public void initLogic(View view) {
         loadPhoto();
+
+        AdView adView = (AdView) view.findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         srl.setColorSchemeColors(Color.BLUE, Color.RED, Color.BLUE);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

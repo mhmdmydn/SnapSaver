@@ -41,4 +41,12 @@
     <string name="no_stiker">No Sticker</string>
     <string name="json_link">https://raw.githubusercontent.com/mhmdmydn/SnapSaver/main/Resources/contents.json</string>
     <string name="add_to_whatsapp">Add To WhatsApp</string>
+
+
+    <!--  mengunakan akun muhammadmayudin dengan nama aplikasi iklan AppInfoX  -->
+    <string name="admod_id">ca-app-pub-9576695952668383~3619640023</string>
+    <string name="banner_ads">ca-app-pub-9576695952668383/6054231679</string>
+    <string name="interstisial_ads">ca-app-pub-9576695952668383/1660790513</string>
+    <string name="reward_ads">ca-app-pub-9576695952668383/6280608095</string>
+    <string name="native_ads">ca-app-pub-9576695952668383/6280608095</string>
 </resources>

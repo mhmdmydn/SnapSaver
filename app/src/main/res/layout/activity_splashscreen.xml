@@ -32,6 +32,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.603" />
 
+    <in.codeshuffle.typewriterview.TypeWriterView
+        android:id="@+id/typeWriterView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_version"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progress_splash"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/tv_version"
         android:layout_width="wrap_content"

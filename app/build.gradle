@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.github.joielechong:countrycodepicker:2.4.2'
     implementation 'com.fxn769:pix:1.5.6'
     implementation 'com.orhanobut:hawk:2.0.1'
+    implementation 'in.codeshuffle:typewriterview:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 

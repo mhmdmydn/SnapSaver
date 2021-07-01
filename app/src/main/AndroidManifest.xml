@@ -27,7 +27,7 @@
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="@string/admod_id" />
 
         <activity
             android:name=".activity.Splashscreen"
@@ -75,6 +75,15 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/videowallpaper" />
         </service>
+
+        <service android:name=".service.PhoneClipBoard"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.ghodel.snapsaver.START_SERVICE"/>
+            </intent-filter>
+        </service>
+
 
         <provider
             android:name=".whatsapp_code.provider.StickerContentProvider"

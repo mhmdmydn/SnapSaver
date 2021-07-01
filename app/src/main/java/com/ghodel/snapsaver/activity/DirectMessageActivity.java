@@ -1,14 +1,19 @@
 package com.ghodel.snapsaver.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,10 +23,19 @@ import com.ghodel.snapsaver.R;
 import com.ghodel.snapsaver.adapter.ContactAdapter;
 import com.ghodel.snapsaver.helper.DBHelper;
 import com.ghodel.snapsaver.model.ContactModel;
+import com.ghodel.snapsaver.service.PhoneClipBoard;
 import com.ghodel.snapsaver.utils.MainUtil;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+
+import static android.content.ClipDescription.MIMETYPE_TEXT_PLAIN;
 
 public class DirectMessageActivity extends BaseActivity {
 
@@ -34,6 +48,8 @@ public class DirectMessageActivity extends BaseActivity {
     private ArrayList<ContactModel> listDb = new ArrayList<>();
     private ContactAdapter contactAdapter;
 
+    private static final String TAG = DirectMessageActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +57,7 @@ public class DirectMessageActivity extends BaseActivity {
         initView();
         initLogic();
         initListener();
+
     }
 
     @Override
@@ -59,6 +76,56 @@ public class DirectMessageActivity extends BaseActivity {
 
         ccp.registerPhoneNumberTextView(edtPhone);
         loadHistoryPhone();
+
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        assert clipboard != null;
+        if ((clipboard.hasPrimaryClip())) {
+            if ((clipboard.getPrimaryClipDescription().hasMimeType(MIMETYPE_TEXT_PLAIN))) {
+                final ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+                String paste = item.getText().toString();
+                edtPhone.setText(paste);
+            }
+        }
+
+        AdView adView = (AdView) findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull @NotNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                Log.i(TAG, "ads error" + loadAdError.getMessage());
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                Log.i(TAG, "ads load");
+            }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                Log.i(TAG, "ads clicked");
+            }
+
+            @Override
+            public void onAdImpression() {
+                super.onAdImpression();
+            }
+        });
     }
 
     private void loadHistoryPhone(){
@@ -77,6 +144,7 @@ public class DirectMessageActivity extends BaseActivity {
         }
     }
 
+
     @Override
     public void initListener() {
 
@@ -87,7 +155,7 @@ public class DirectMessageActivity extends BaseActivity {
                 if(MainUtil.appInstalledOrNot(getApplicationContext(), "com.whatsapp")){
                     try {
                         Intent whatsappGo = new Intent(Intent.ACTION_VIEW);
-                        whatsappGo.setData(Uri.parse("whatsapp://send?phone=" + ccp.getFullNumber() + "&text=" + messageText));
+                        whatsappGo.setData(Uri.parse("whatsapp://send?phone=" + ccp.getNumber() + "&text=" + messageText));
                         startActivity(whatsappGo);
 
                         // menambahkan data ke database

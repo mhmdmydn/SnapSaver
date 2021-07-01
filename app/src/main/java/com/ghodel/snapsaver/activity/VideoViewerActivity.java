@@ -1,7 +1,7 @@
 package com.ghodel.snapsaver.activity;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
-import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.Toast;
@@ -22,6 +23,10 @@ import com.ghodel.snapsaver.R;
 import com.ghodel.snapsaver.utils.Constants;
 import com.ghodel.snapsaver.utils.MainUtil;
 import com.ghodel.snapsaver.utils.VideoWallpaper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,12 +39,15 @@ import java.util.Objects;
 public class VideoViewerActivity extends BaseActivity {
 
     private int position;
+
     private String video;
     private ArrayList<HashMap<String, Object>> list;
     private FloatingActionButton fabDelete, fabSave, fabRepost, fabLiveWallpaper;
     private File f;
     private VideoView videoView;
     private Uri nextUri, previousUri;
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +85,7 @@ public class VideoViewerActivity extends BaseActivity {
             //Creating MediaController
             MediaController mediaController = new MediaController(this);
             mediaController.setAnchorView(videoView);
-            mediaController.setPrevNextListeners(onClickListenerNext, onClickListenerPrevious);
+//            mediaController.setPrevNextListeners(onClickListenerNext, onClickListenerPrevious);
 
             //Setting MediaController and URI, then starting the videoView
             videoView.setMediaController(mediaController);
@@ -103,6 +111,25 @@ public class VideoViewerActivity extends BaseActivity {
 
 
 
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, getString(R.string.interstisial_ads), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i("Ads Load", "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i("Ads Error", loadAdError.getMessage());
+                        mInterstitialAd = null;
+                    }
+                });
 
     }
 
@@ -112,7 +139,6 @@ public class VideoViewerActivity extends BaseActivity {
             if(!(position < list.size())){
                 return;
             }
-
             nextUri = Uri.parse(list.get(position++).get("path").toString());
             videoView.setVideoURI(nextUri);
             videoView.start();
@@ -124,7 +150,6 @@ public class VideoViewerActivity extends BaseActivity {
             if(!(position < list.size())){
                 return;
             }
-
             previousUri = Uri.parse(list.get(position--).get("path").toString());
             videoView.setVideoURI(previousUri);
             videoView.start();
@@ -204,6 +229,7 @@ public class VideoViewerActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     File save = MainUtil.exportFile(new File(list.get(position).get("path").toString()), new File(Constants.SnapSaverPath));
+
                     VideoWallpaper.setToWallPaper(getApplicationContext(), save.getAbsolutePath());
                     VideoWallpaper.setVoiceSilence(getApplicationContext());
                 } catch (IOException e) {
@@ -217,7 +243,13 @@ public class VideoViewerActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(VideoViewerActivity.this);
+        } else {
+            finish();
+            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+        }
+
     }
 
     @Override

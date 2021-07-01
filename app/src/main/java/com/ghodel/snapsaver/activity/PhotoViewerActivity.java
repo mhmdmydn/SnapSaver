@@ -1,5 +1,6 @@
 package com.ghodel.snapsaver.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -13,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,6 +28,10 @@ import com.ghodel.snapsaver.R;
 import com.ghodel.snapsaver.adapter.ImageAdapter;
 import com.ghodel.snapsaver.utils.Constants;
 import com.ghodel.snapsaver.utils.MainUtil;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,11 +44,13 @@ import java.util.Objects;
 public class PhotoViewerActivity extends BaseActivity {
 
     private int Position;
+    private int currentPosition;
     private String Gambar;
     private ViewPager viewPager;
     private ArrayList<HashMap<String, Object>> list = new ArrayList<>();
     private FloatingActionButton fabDelete, fabSave, fabRepost, fabSetas;
     private File f;
+    private InterstitialAd mInterstitialAd;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -83,12 +91,33 @@ public class PhotoViewerActivity extends BaseActivity {
 
         list = new Gson().fromJson(Gambar, new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType());
 
-//        for delete file
+        //for delete file
         f = new File(list.get(Position).get("path").toString());
 
         ImageAdapter imageAdapter = new ImageAdapter(PhotoViewerActivity.this, list);
         viewPager.setAdapter(imageAdapter);
         viewPager.setCurrentItem(Position);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, getString(R.string.interstisial_ads), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i("Ads Load", "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i("Ads Error", loadAdError.getMessage());
+                        mInterstitialAd = null;
+                    }
+                });
+
 
     }
 
@@ -99,7 +128,7 @@ public class PhotoViewerActivity extends BaseActivity {
             public void onClick(View v) {
 
 
-                File file = new File(list.get(Position).get("path").toString());
+                File file = new File(list.get(viewPager.getCurrentItem()).get("path").toString());
                 if (file.delete()){
                     Toast.makeText(PhotoViewerActivity.this, "Berhasil dihapus", Toast.LENGTH_SHORT).show();
                     onBackPressed();
@@ -118,7 +147,7 @@ public class PhotoViewerActivity extends BaseActivity {
                 Parcelable uriForFile;
                 if (Build.VERSION.SDK_INT >= 24) {
                     uriForFile = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                            BuildConfig.APPLICATION_ID + ".provider", new File(list.get(Position).get("path").toString()));
+                            BuildConfig.APPLICATION_ID + ".provider", new File(list.get(viewPager.getCurrentItem()).get("path").toString()));
                     try {
                         intent = new Intent("android.intent.action.SEND");
                         intent.setType("image/*");
@@ -133,7 +162,7 @@ public class PhotoViewerActivity extends BaseActivity {
                         return;
                     }
                 }
-                uriForFile = Uri.parse(new StringBuffer().append("file://").append(list.get(Position).get("path").toString()).toString());
+                uriForFile = Uri.parse(new StringBuffer().append("file://").append(list.get(viewPager.getCurrentItem()).get("path").toString()).toString());
                 try {
                     intent = new Intent("android.intent.action.SEND");
                     intent.setType("image/*");
@@ -155,7 +184,7 @@ public class PhotoViewerActivity extends BaseActivity {
                 Uri uriForFile;
                 if(Build.VERSION.SDK_INT >= 24){
                     uriForFile = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                            BuildConfig.APPLICATION_ID + ".provider", new File(list.get(Position).get("path").toString()));
+                            BuildConfig.APPLICATION_ID + ".provider", new File(list.get(viewPager.getCurrentItem()).get("path").toString()));
                     intent = new Intent("android.intent.action.ATTACH_DATA");
                     intent.setDataAndType(uriForFile, "image/*");
                     intent.putExtra("mimeType", "image/*");
@@ -163,7 +192,7 @@ public class PhotoViewerActivity extends BaseActivity {
                     startActivity(Intent.createChooser(intent, "Set as: "));
                     return;
                 }
-                uriForFile = Uri.parse(new StringBuffer().append("file://").append(list.get(Position).get("path").toString()).toString());
+                uriForFile = Uri.parse(new StringBuffer().append("file://").append(list.get(viewPager.getCurrentItem()).get("path").toString()).toString());
                 intent = new Intent("android.intent.action.ATTACH_DATA");
                 intent.setDataAndType(uriForFile, "image/*");
                 intent.putExtra("mimeType", "image/*");
@@ -177,8 +206,8 @@ public class PhotoViewerActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    MainUtil.exportFile(new File(list.get(Position).get("path").toString()), new File(Constants.SnapSaverPath));
-                    Toast.makeText(PhotoViewerActivity.this,MainUtil.exportFile(new File(list.get(Position).get("path").toString()), new File(Constants.SnapSaverPath)).getAbsolutePath(), Toast.LENGTH_SHORT).show();
+                    MainUtil.exportFile(new File(list.get(viewPager.getCurrentItem()).get("path").toString()), new File(Constants.SnapSaverPath));
+                    Toast.makeText(PhotoViewerActivity.this,MainUtil.exportFile(new File(list.get(viewPager.getCurrentItem()).get("path").toString()), new File(Constants.SnapSaverPath)).getAbsolutePath(), Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -201,7 +230,14 @@ public class PhotoViewerActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(PhotoViewerActivity.this);
+        } else {
+            finish();
+            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+        }
+
+
     }
 
 }

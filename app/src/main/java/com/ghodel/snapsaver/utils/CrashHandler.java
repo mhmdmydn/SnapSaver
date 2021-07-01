@@ -220,6 +220,7 @@ public final class CrashHandler {
 
                 case 2:
                     //Restart
+
                     restart();
                     break;
             }

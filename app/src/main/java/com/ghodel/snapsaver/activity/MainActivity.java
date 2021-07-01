@@ -20,6 +20,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.ghodel.snapsaver.R;
 import com.ghodel.snapsaver.fragment.PhotoFragment;
 import com.ghodel.snapsaver.fragment.VideosFragment;
+import com.ghodel.snapsaver.service.PhoneClipBoard;
 import com.ghodel.snapsaver.utils.MainUtil;
 import com.google.android.material.navigation.NavigationView;
 
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private final static int ID_PHOTOS = 1;
     private final static int ID_VIDEOS = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void initLogic() {
+
+        // clipboard listener
+        Intent svc = new Intent(MainActivity.this, PhoneClipBoard.class);
+        startService(svc);
+
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
